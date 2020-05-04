@@ -23,7 +23,7 @@ mysqlConnection.connect((err)=>{
 
 app.listen(3000,()=>console.log('Server running at port 3000'));
 //get Students
-app.get('/students/show',(req,res)=>{
+app.get('/api/students',(req,res)=>{
     mysqlConnection.query('select * from NodeStudent',(err,rows,fields)=>{
         if(!err)
         {
@@ -37,7 +37,7 @@ app.get('/students/show',(req,res)=>{
 });
 
 //search
-app.get('/students/show/:dte_id',(req,res)=>{
+app.get('/api/students/:dte_id',(req,res)=>{
     mysqlConnection.query('select * from NodeStudent where dte_id = ?',[req.params.dte_id],(err,rows,fields)=>{
         if(!err)
         {
@@ -51,7 +51,7 @@ app.get('/students/show/:dte_id',(req,res)=>{
 });
 
 //delete
-app.delete('/students/:dte_id',(req,res)=>{
+app.delete('/api/students/:dte_id',(req,res)=>{
     mysqlConnection.query('delete from NodeStudent where dte_id = ?',[req.params.dte_id],(err,rows,fields)=>{
         if(!err)
         {
@@ -65,7 +65,7 @@ app.delete('/students/:dte_id',(req,res)=>{
     })
 });
 //updateandinsert
-app.post('/students/edit/:dte_id',(req,res)=>{
+app.post('/api/students/:dte_id',(req,res)=>{
     var s = req.body;
     mysqlConnection.query('UPDATE NodeStudent SET name = ?, course = ?, fees = ?, city = ? WHERE dte_id = ?',[s.name, s.course, s.fees, s.city ,s.dte_id],(err,rows,fields)=>{
         if(!err)
@@ -80,7 +80,7 @@ app.post('/students/edit/:dte_id',(req,res)=>{
     })
 });
 
-app.post('/students/create',(req,res)=>{
+app.post('/api/students',(req,res)=>{
     var s = req.body;
     mysqlConnection.query('insert into NodeStudent values(?,?,?,?,?)',[s.dte_id,s.name, s.course, s.fees,s.city],(err,rows,fields)=>{
         if(!err)
